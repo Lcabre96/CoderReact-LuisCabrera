@@ -1,28 +1,21 @@
 
 /* NAV MENU */
 
-.nav-container {
+.navBar {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
+    min-height: 100px;
+}
+
+.navBar .categorias {
     padding: 1rem;
-}
-
-.nav-container li {
-    list-style: none;
-}
-
-.item-list {
+    font-size: 1rem;
     text-decoration: none;
-    color: #000;
-    font-size: 1.2rem;
-    font-family: sans-serif;
+    font-family: Helvetica, sans-serif;
+    text-transform: uppercase;
+    color: #fff;
 }
-
-.item-list:hover {
-    text-decoration: underline;
-}
-
 
 .shop-item {
     cursor: pointer;
@@ -31,6 +24,7 @@
 .shop-icon {
     cursor: pointer;
     font-size: 1.7rem;
+    color: #fff;
 }
 
 /*  */
