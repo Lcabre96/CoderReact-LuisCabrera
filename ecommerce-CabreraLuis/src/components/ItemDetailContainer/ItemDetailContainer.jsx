@@ -1,16 +1,33 @@
-import ItemDetail from "../ItemDetail/ItemDetail"
+import { getOneData } from "../data-base/firestore";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { DotPulse } from "@uiball/loaders";
+import ItemDetail from "../ItemDetail/ItemDetail";
 
+function ItemDetailContainer() {
+  const [data, setData] = useState({});
+  const { id } = useParams();
+  const [isLoading, setIsLoading] = useState(true);
 
-
-const ItemDetailContainer = () => {
- 
-  // const {productId} = useParams()
+  useEffect(() => {
+    getOneData(id)
+      .then((respuestaDatos) => setData(respuestaDatos))
+      .finally(() => setIsLoading(false));
+  }, [id]);
 
   return (
     <div>
-      <ItemDetail />
+      {isLoading ? (
+        <div className="loading">
+          <DotPulse size={55} speed={1.3} color="black" />
+        </div>
+      ) : (
+        <div>
+          <ItemDetail item={data} />
+        </div>
+      )}
     </div>
-  )
+  );
 }
 
-export default ItemDetailContainer
+export default ItemDetailContainer;

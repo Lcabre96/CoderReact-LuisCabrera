@@ -1,48 +1,42 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { gFetch } from "../../utils/gFetch";
+import "./ItemDetail.css";
 import ItemCount from "../ItemCount/ItemCount";
+import React, { useState, useContext } from "react";
+import { Link } from "react-router-dom";
+import { cartContext } from "../../context/cartContext";
 
-const ItemDetail = () => {
-  const [product, setProduct] = useState([]);
-  const { productId } = useParams();
+function ItemDetail({ item }) {
+  const { price, title, img, detail } = item;
+  const [cartVacio, setCartVacio] = useState(true);
+  const { addItem } = useContext(cartContext);
 
-  useEffect(() => {
-    gFetch().then((res) => {
-      setProduct(res.filter((el) => el.id === productId));
-      console.log(product);
-    });
-  }, []);
-
-
-  const onAdd = (cantidad) => {
-    console.log(`Agregaste ${cantidad} unidades al carrito.`)
-
+  function onAdd(count) {
+    addItem(item, count);
+    setCartVacio(false);
   }
 
-
   return (
-    <>
-      {product.map((obj) => (
-        <center key={obj.id}>
-          <div  className="card w-75 mx-1">
-            <center>
-              <h5 className="card-header">{obj.categoria} #{obj.id}</h5>
-            </center>
-            <div className="card-body">
-              <center>
-                <img src={obj.img} className="w-25 img-fluid" />
-              </center>
-            </div>
-            <div className="card-footer">
-              <p>Price: {obj.price}</p>
-            </div>
-            <ItemCount initial={1} stock={5} onAdd={onAdd} />
+    <div className="item-detail-contenedor">
+      <img src={img} alt="item-detail img"></img>
+      <div className="item-detail-producto">
+        <h1>{title}</h1>
+        <h3>$ {price}</h3>
+        <h2>Detalles: </h2>
+        <h4>{detail}</h4>
+        {cartVacio ? (
+          <ItemCount initial={1} stock={15} onAdd={onAdd} />
+        ) : (
+          <div>
+            <Link className="finalizar-compra" to="/cart">
+              Ir al Carrito
+            </Link>
+            <button className="seguir-comprando" onClick={setCartVacio}>
+              Seguir comprando
+            </button>
           </div>
-        </center>
-      ))}
-    </>
+        )}
+      </div>
+    </div>
   );
-};
+}
 
 export default ItemDetail;
