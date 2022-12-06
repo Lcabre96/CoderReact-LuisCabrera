@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getData, getItemsByCategory } from "../data-base/firestore";
-/* import Carrusel from "../Carousel/Carousel"; */
 import { DotPulse } from "@uiball/loaders";
 import ItemList from "../ItemList/ItemList";
 
@@ -28,7 +27,6 @@ function ItemListContainer() {
 
   return (
     <div>
-    {/*   <Carrusel /> */}
       {isLoading ? (
         <div className="loading-inicio">
           <DotPulse size={55} speed={1.3} color="black" />
